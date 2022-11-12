@@ -1,0 +1,24 @@
+<resources>
+    <string name="app_name">Home Visits</string>
+
+    <string name="hihi">Home Visits</string>
+
+    <string name="total_visits_hint">Total visits:</string>
+    <string name="total_income_hint">My income:</string>
+
+    <string name="pricelist_hint">Prices</string>
+    <string name="visits_hint">Visits</string>
+    <string name="income_hint">Income</string>
+    <string name="summary_hint">Summary:</string>
+
+    <string name="menu_main_edit">Edit</string>
+    <string name="menu_main_month">Month</string>
+    <string name="menu_main_day">Day</string>
+    <string name="menu_main_year">Year</string>
+
+    <string name="cont_desc_prev">prev</string>
+    <string name="cont_desc_next">next</string>
+    <string name="cont_desc_save">save</string>
+    <string name="cont_desc_less">less</string>
+    <string name="cont_desc_more">more</string>
+</resources>

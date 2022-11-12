@@ -1,0 +1,24 @@
+<resources>
+    <string name="app_name">Home Visits</string>
+
+    <string name="hihi">Пясдата!</string>
+
+    <string name="total_visits_hint">Итого визитов:</string>
+    <string name="total_income_hint">Моя зарплата:</string>
+
+    <string name="pricelist_hint">Такса</string>
+    <string name="visits_hint">Визитов</string>
+    <string name="income_hint">Зарплата</string>
+    <string name="summary_hint">Итого:</string>
+
+    <string name="menu_main_edit">Правка</string>
+    <string name="menu_main_month">Месяц</string>
+    <string name="menu_main_day">День</string>
+    <string name="menu_main_year">Год</string>
+
+    <string name="cont_desc_prev">пред</string>
+    <string name="cont_desc_next">след</string>
+    <string name="cont_desc_save">сохр</string>
+    <string name="cont_desc_less">-</string>
+    <string name="cont_desc_more">+</string>
+</resources>

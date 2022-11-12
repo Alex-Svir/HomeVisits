@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="daysBefore">
+        <item>Вчера</item>
+        <item>Позавчера</item>
+        <item>Третьего дня</item>
+        <item>Анадысь</item>
+        <item>Пыльная старь</item>
+        <item>Седая древность</item>
+        <item>Дохуя давно</item>
+    </string-array>
+    <string-array name="daysAfterAndToday">
+        <item>Сегодня</item>
+        <item>Завтра</item>
+        <item>Послезавтра</item>
+        <item>Туманное будущее</item>
+    </string-array>
+</resources>

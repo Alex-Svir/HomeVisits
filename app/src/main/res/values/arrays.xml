@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="daysBefore">
+        <item>Yesterday</item>
+        <item>Day before yesterday</item>
+        <item>Three days ago</item>
+        <item>Days ago</item>
+        <item>Weeks ago</item>
+        <item>Months ago</item>
+        <item>Years ago</item>
+    </string-array>
+    <string-array name="daysAfterAndToday">
+        <item>Today</item>
+        <item>Tomorrow</item>
+        <item>Day after tomorrow</item>
+        <item>Foggy future</item>
+    </string-array>
+</resources>

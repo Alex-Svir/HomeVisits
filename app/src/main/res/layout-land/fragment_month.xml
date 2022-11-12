@@ -1,0 +1,149 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/gl_middle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="@dimen/land_fragment_month_ratio" />
+
+    <View
+        android:id="@+id/divider_top"
+        android:layout_width="@dimen/header_divider_width"
+        android:layout_height="1dp"
+        android:layout_marginTop="@dimen/header_margin_top"
+        android:background="?android:attr/listDivider"
+        app:layout_constraintEnd_toStartOf="@id/gl_middle"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/tv_month"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/header_tv_padding_large"
+        android:text="октябрь 2022"
+        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+        android:textStyle="italic|bold"
+        app:layout_constraintEnd_toStartOf="@id/gl_middle"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/divider_top" />
+
+    <ImageView
+        android:id="@+id/bt_previous"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/list_margin_horizontal"
+        android:src="@android:drawable/ic_media_rew"
+        android:contentDescription="@string/cont_desc_prev"
+        app:layout_constraintTop_toBottomOf="@id/divider_bottom"
+        app:layout_constraintStart_toStartOf="parent"
+        />
+
+    <ImageView
+        android:id="@+id/bt_next"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="@dimen/list_margin_horizontal"
+        android:src="@android:drawable/ic_media_ff"
+        android:contentDescription="@string/cont_desc_next"
+        app:layout_constraintTop_toBottomOf="@id/divider_bottom"
+        app:layout_constraintEnd_toStartOf="@id/gl_middle"
+        />
+
+    <View
+        android:id="@+id/divider_bottom"
+        android:layout_width="@dimen/header_divider_width"
+        android:layout_height="1dp"
+        android:background="?android:attr/listDivider"
+        app:layout_constraintEnd_toStartOf="@id/gl_middle"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tv_month" />
+
+    <TextView
+        android:id="@+id/tv_ttl_vis"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/total_visits_hint"
+        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+        android:textStyle="bold|italic"
+        android:layout_marginStart="@dimen/footer_margin_end"
+        app:layout_constraintBottom_toTopOf="@id/tv_ttl_inc"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <TextView
+        android:id="@+id/tv_ttl_inc"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/total_income_hint"
+        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+        android:textStyle="italic|bold"
+        android:layout_marginStart="@dimen/footer_margin_end"
+        android:layout_marginBottom="@dimen/footer_margin_bottom"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <androidx.constraintlayout.widget.Barrier
+        android:id="@+id/barrier_footer"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:barrierDirection="end"
+        app:barrierMargin="@dimen/footer_space_ltr"
+        app:constraint_referenced_ids="tv_ttl_inc,tv_ttl_vis"
+        tools:layout_editor_absoluteX="411dp" />
+
+    <TextView
+        android:id="@+id/tv_count"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="6"
+        android:textAppearance="@style/TextAppearance.AppCompat.Large"
+        android:textStyle="bold"
+        app:layout_constraintStart_toEndOf="@id/barrier_footer"
+        app:layout_constraintBaseline_toBaselineOf="@id/tv_ttl_vis"
+        />
+
+    <TextView
+        android:id="@+id/tv_sum"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="500"
+        android:textAppearance="@style/TextAppearance.AppCompat.Large"
+        android:textStyle="bold"
+        app:layout_constraintStart_toEndOf="@id/barrier_footer"
+        app:layout_constraintBaseline_toBaselineOf="@id/tv_ttl_inc"
+        />
+
+    <include
+        layout="@layout/item_month_list"
+        android:id="@+id/in_titles"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/list_month_space"
+        android:layout_marginBottom="@dimen/list_month_space"
+        android:layout_marginStart="@dimen/list_margin_horizontal"
+        android:layout_marginEnd="@dimen/list_margin_horizontal"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/lv_entries"
+        app:layout_constraintStart_toEndOf="@id/gl_middle"
+        app:layout_constraintEnd_toEndOf="parent"
+        />
+
+    <ListView
+        android:id="@+id/lv_entries"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginBottom="@dimen/footer_margin_bottom"
+        android:layout_marginStart="@dimen/list_margin_horizontal"
+        android:layout_marginEnd="@dimen/list_margin_horizontal"
+        app:layout_constraintTop_toBottomOf="@id/in_titles"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/gl_middle"
+        app:layout_constraintBottom_toBottomOf="parent" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

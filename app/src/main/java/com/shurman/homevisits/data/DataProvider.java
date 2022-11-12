@@ -1,0 +1,58 @@
+package com.shurman.homevisits.data;
+
+import android.content.Context;
+
+import com.shurman.homevisits.database.DaoVisits;
+import com.shurman.homevisits.database.DataBaseHolder;
+import com.shurman.homevisits.database.DataLoad;
+import com.shurman.homevisits.database.TableVisits;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Collectors;
+
+/**
+ *
+ *      public class providing the access to the database with user data
+ *
+ */
+public class DataProvider {
+
+    public static void loadMonth(Context context, int year, int month, DataLoad.Month cb) {
+        new Thread(() -> {
+                //  1)  Read database
+            List<TableVisits> list = daoVisits(context).loadMonth(year * 100 + month);
+                //  2)  If not present in database -- new empty month
+            cb.monthParsed(list.size() > 0
+                            ? CompositionUtilities.composeMonth(list, year, month)
+                            : new DMonth(year, month) );
+        }).start();
+    }
+
+    public static void saveDay(Context context, DDay day) {
+        int yyyymm = day.getYear() * 100 + day.getMonth();
+        int date = day.getDay();
+        new Thread(() -> daoVisits(context).saveVisits(
+                    day.entries().stream().filter(e -> e.count > 0).map(e -> {
+                        TableVisits tv = new TableVisits();
+                        tv._yyyymm = yyyymm;
+                        tv._date = date;
+                        tv._price_income = (e.price << 16) | e.salary;
+                        tv._count = e.count;
+                        return tv;
+                    }).collect(Collectors.toCollection(ArrayList::new))
+            )).start();
+        day.altered = false;        //  TODO    review approach [synchronization / db callbacks]
+                                //  third state with a synchronized change
+        /*
+         * for preventing state miscondition when data is being saving state switches to 'saving':
+         * - if saving drops state to 'unaltered' an awaiting function will set 'altered' successfully;
+         * - if 'altered' posted while saving process, callback understands that alteration performed
+         *      after saving has initialized and does not drop 'altered' state
+         */
+    }
+
+    private static DaoVisits daoVisits(Context context) {
+        return DataBaseHolder.get(context).daoVisits();
+    }
+}

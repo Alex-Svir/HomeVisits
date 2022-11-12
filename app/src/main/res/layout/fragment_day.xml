@@ -1,0 +1,159 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <View
+        android:id="@+id/divider_top"
+        android:layout_width="@dimen/header_divider_width"
+        android:layout_height="1dp"
+        android:layout_marginTop="@dimen/header_margin_top"
+        android:background="?android:attr/listDivider"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/tv_date"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/header_tv_padding_small"
+        android:text="2 ноября 2022"
+        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+        android:textStyle="italic|bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/divider_top" />
+
+    <TextView
+        android:id="@+id/tv_day_relative"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/header_tv_padding"
+        android:text="СЕГОДНЯ"
+        android:textAppearance="@style/TextAppearance.AppCompat.Large"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tv_date" />
+
+    <View
+        android:id="@+id/divider_bottom"
+        android:layout_width="@dimen/header_divider_width"
+        android:layout_height="1dp"
+        android:background="?android:attr/listDivider"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tv_day_relative" />
+
+    <ImageView
+        android:id="@+id/bt_previous"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/list_margin_horizontal"
+        android:src="@android:drawable/ic_media_rew"
+        android:contentDescription="@string/cont_desc_prev"
+        app:layout_constraintTop_toBottomOf="@id/tv_date"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <ImageView
+        android:id="@+id/bt_next"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="@dimen/list_margin_horizontal"
+        android:src="@android:drawable/ic_media_ff"
+        android:contentDescription="@string/cont_desc_next"
+        app:layout_constraintTop_toBottomOf="@id/tv_date"
+        app:layout_constraintEnd_toEndOf="parent"
+        />
+
+    <ListView
+        android:id="@+id/lv_entries"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginTop="@dimen/list_margin_vertical"
+        android:layout_marginBottom="@dimen/list_margin_vertical"
+        android:layout_marginStart="@dimen/list_margin_horizontal"
+        android:layout_marginEnd="@dimen/list_margin_horizontal"
+        app:layout_constraintTop_toBottomOf="@id/divider_bottom"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/divider_footer" />
+
+    <View
+        android:id="@+id/divider_footer"
+        android:layout_width="@dimen/header_divider_width"
+        android:layout_height="1dp"
+        android:layout_marginBottom="@dimen/footer_margin_top"
+        android:background="?android:attr/listDivider"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/tv_visits" />
+
+    <!--**********************     FOOTER    ************************-->
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/total_visits_hint"
+        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+        android:textStyle="bold|italic"
+        app:layout_constraintBaseline_toBaselineOf="@id/tv_visits"
+        app:layout_constraintEnd_toStartOf="@id/barrier_footer" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/total_income_hint"
+        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+        android:textStyle="italic|bold"
+        app:layout_constraintBaseline_toBaselineOf="@id/tv_salary"
+        app:layout_constraintEnd_toStartOf="@id/barrier_footer" />
+
+    <androidx.constraintlayout.widget.Barrier
+        android:id="@+id/barrier_footer"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:barrierDirection="start"
+        app:barrierMargin="@dimen/footer_space_rtl"
+        app:constraint_referenced_ids="tv_visits,tv_salary"
+        tools:layout_editor_absoluteX="411dp"
+        />
+
+    <TextView
+        android:id="@+id/tv_visits"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="@dimen/footer_margin_end"
+        android:text="6"
+        android:textAppearance="@style/TextAppearance.AppCompat.Large"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toTopOf="@id/tv_salary"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <TextView
+        android:id="@+id/tv_salary"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="@dimen/footer_margin_end"
+        android:layout_marginBottom="@dimen/footer_margin_bottom"
+        android:text="500"
+        android:textAppearance="@style/TextAppearance.AppCompat.Large"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"/>
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/fab_save"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:clickable="true"
+        android:layout_margin="@dimen/fab_button_margin"
+        app:srcCompat="@android:drawable/ic_menu_save"
+        android:contentDescription="@string/cont_desc_save"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"/>
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="header_margin_top">30dp</dimen>
+    <dimen name="header_divider_width">200dp</dimen>
+    <dimen name="header_tv_padding">10dp</dimen>
+    <dimen name="header_tv_padding_small">5dp</dimen>
+    <dimen name="header_tv_padding_large">25dp</dimen>
+
+    <dimen name="list_margin_vertical">25dp</dimen>
+    <dimen name="list_margin_horizontal">20dp</dimen>
+    <dimen name="list_item_padding">4dp</dimen>
+
+    <dimen name="list_day_counter_width">50dp</dimen>
+
+    <dimen name="list_month_pricesalary_part">0.40</dimen>
+    <dimen name="list_month_count_part">0.25</dimen>
+    <dimen name="list_month_income_part">0.35</dimen>
+    <dimen name="list_month_space">15dp</dimen>
+    <dimen name="list_month_summary_text_size">22sp</dimen>
+
+    <dimen name="footer_margin_top">15dp</dimen>
+    <dimen name="footer_margin_bottom">30dp</dimen>
+    <dimen name="footer_margin_end">20dp</dimen>
+    <dimen name="footer_space_rtl">-15dp</dimen>
+    <dimen name="footer_space_ltr">15dp</dimen>
+
+    <dimen name="land_fragment_day_ratio">0.4</dimen>
+    <dimen name="land_fragment_month_ratio">0.4</dimen>
+
+    <dimen name="fab_button_margin">35dp</dimen>
+</resources>
