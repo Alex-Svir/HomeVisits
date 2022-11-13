@@ -41,14 +41,7 @@ public class MainActivity extends AppCompatActivity {
             dropPtr <<= 1;
             itemPtr++;
         }
-        l("create menu");
         return true;
-    }
-
-    @Override
-    public boolean onPrepareOptionsMenu(Menu menu) {
-        l("prep menu");
-        return super.onPrepareOptionsMenu(menu);
     }
 
     @Override
