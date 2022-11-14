@@ -4,7 +4,6 @@ import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 
-import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.RecyclerView;
 
 public class TableLayoutManager extends RecyclerView.LayoutManager {
@@ -63,47 +62,42 @@ public class TableLayoutManager extends RecyclerView.LayoutManager {
             measureChildWithMargins(view, 0, 0);
 
             int m = view.getMeasuredHeight();                             //  TODO    Rexrakt
-            if (i / cols < CellsCoordinator.FIXED_TOP) { if (hdrY < m) hdrY = m; }
+            if (i / cols < coordinator.getFixedRows()) { if (hdrY < m) hdrY = m; }
             else { if (cellY < m) cellY = m; }
 
             m = view.getMeasuredWidth();
-            if (i % cols < CellsCoordinator.FIXED_LEFT) { if (hdrX < m) hdrX = m; }
+            if (i % cols < coordinator.getFixedColumns()) { if (hdrX < m) hdrX = m; }
             else { if (cellX < m) cellX = m; }
         }
-        coordinator.setCellDimensions(cellX, cellY, hdrX, hdrY, width, height);
-        int[] bounds = coordinator.calculateScrollableBounds();
-        scrollHor.reset(bounds[0], bounds[1]);
-        scrollVert.reset(bounds[2], bounds[3]);
+        int[] bounds = coordinator.setCellDimensions(cellX, cellY, hdrX, hdrY, width, height);
+        scrollHor.reset(bounds[0]);
+        scrollVert.reset(bounds[1]);
     }
 
     private void layoutVisibleArea(RecyclerView.Recycler recycler, RecyclerView.State state) {
         detachAndScrapAttachedViews(recycler);
-
-        final int startX = scrollHor.getPosition();
-        final int endX = startX + getWidth();
-        final int startY = scrollVert.getPosition();
-        final int endY = startY + getHeight();
-
-        CellsCoordinator.Bounds boundItems = coordinator.visibleItems(startX, startY, endX, endY);
-
-        int left = boundItems.startX();
-        int top = boundItems.startY();
-        int right;
-        int bottom = top;
-        final int leftBoundary = left;
-
-        for (int it = boundItems.next(); it >= 0 && it < state.getItemCount(); it = boundItems.next()) {
-            final View view = recycler.getViewForPosition(it);
-            addView(view);
-            measureChildWithMargins(view, 0, 0);                //  TODO    validate => remeasure table
-            if (boundItems.newRow()) {
-                left = leftBoundary;
-                top = bottom;
+        CellsCoordinator.Frame boundItems = coordinator.visibleItems(scrollHor.getPosition(), scrollVert.getPosition());
+        int[] coordinates;
+        while (null != (coordinates = boundItems.nextBlock())) {
+            int left = coordinates[0];
+            int top = coordinates[1];
+            int right;
+            int bottom = top;
+            final int leftBoundary = left;
+            for (int it = boundItems.next(); it >= 0 && it < state.getItemCount(); it = boundItems.next()) {
+                final View view = recycler.getViewForPosition(it);
+                addView(view);
+                measureChildWithMargins(view, 0, 0);                //  TODO    validate => remeasure table
+                if (boundItems.newRow()) {
+                    left = leftBoundary;
+                    top = bottom;
+                }
+                right = left + view.getMeasuredWidth();
+                bottom = top + view.getMeasuredHeight();
+                layoutDecoratedWithMargins(view, left, top, right, bottom);
+                left = right;
             }
-            right = left + view.getMeasuredWidth();
-            bottom = top + view.getMeasuredHeight();
-            layoutDecoratedWithMargins(view, left, top, right, bottom);
-            left = right;
+
         }
         recycler.clear();
     }

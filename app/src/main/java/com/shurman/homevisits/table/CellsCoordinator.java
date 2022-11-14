@@ -6,121 +6,203 @@ public class CellsCoordinator {
     static final int COLUMNS = 10;
     static final int CAPACITY = 175;
 //==================================================================================================
-    public static final int FIXED_TOP = 2;
-    public static final int FIXED_LEFT = 1;
+    private static final int FIXED_ROWS = 3;
+    private static final int FIXED_COLS = 2;
 
-    private int columns;
-    private int rows;
+    private int mColumns;
+    private int mRows;
+    private int mFixedColumns;
+    private int mFixedRows;
+    private int mScrollableColumns;
+    private int mScrollableRows;
 
-    private int cellWidth;
-    private int cellHeight;
-    private int fixWidth;
-    private int fixHeight;
+    private int mCellWidth;
+    private int mCellHeight;
+    private int mFixedColumnsWidth;
+    private int mFixedRowsHeight;
 
-    private int viewWidth;
-    private int viewHeight;
+    private int mFixedWidth;
+    private int mFixedHeight;
+    private int mScrollableWidth;
+    private int mScrollableHeight;
+    private int mTotalWidth;
+    private int mTotalHeight;
+
+    private int mFrameWidth;
+    private int mFrameHeight;
+    private int mSubframeWidth;
+    private int mSubframeHeight;
+
+    private int mScrollRangeHor;
+    private int mScrollRangeVert;
+
+    private final Frame mFrame;
 
     public CellsCoordinator() {
-        setTableDimensions(COLUMNS, CAPACITY / COLUMNS + (CAPACITY % COLUMNS > 0 ? 1 : 0));
+        mFrame = new Frame();
+        setTableDimensions(COLUMNS, CAPACITY / COLUMNS + (CAPACITY % COLUMNS > 0 ? 1 : 0));     //  TODO
         setCellDimensions(0,0,0,0,0,0);
     }
 
     public void setTableDimensions(int columns, int rows) {
-        this.columns = columns;
-        this.rows = rows;
+        mColumns = columns;
+        mRows = rows;
+        mFixedColumns = FIXED_COLS;                //      TODO
+        mFixedRows = FIXED_ROWS;                    //      TODO
+        mScrollableColumns = Math.max(mColumns - mFixedColumns, 0);
+        mScrollableRows = Math.max(mRows - mFixedRows, 0);
     }
 
-    public void setCellDimensions(int cellX, int cellY, int hdrX, int hdrY, int width, int height) {
-        cellWidth = cellX;
-        cellHeight = cellY;
-        fixWidth = hdrX;
-        fixHeight = hdrY;
-        viewWidth = width;
-        viewHeight = height;
+    public int[] setCellDimensions(int cellX, int cellY, int hdrX, int hdrY, int width, int height) {
+        mCellWidth = cellX;
+        mCellHeight = cellY;
+        mFixedColumnsWidth = hdrX;
+        mFixedRowsHeight = hdrY;
+
+        mFixedWidth = mFixedColumnsWidth * mFixedColumns;
+        mFixedHeight = mFixedRowsHeight * mFixedRows;
+        mScrollableWidth = mCellWidth * mScrollableColumns;
+        mScrollableHeight = mCellHeight * mScrollableRows;
+        mTotalWidth = mFixedWidth + mScrollableWidth;
+        mTotalHeight = mFixedHeight + mScrollableHeight;
+
+        mFrameWidth = width;
+        mFrameHeight = height;
+        mSubframeWidth = Math.max(mFrameWidth - mFixedWidth, 0);
+        mSubframeHeight = Math.max(mFrameHeight - mFixedHeight, 0);
+
+        mScrollRangeHor = Math.max(mScrollableWidth - mSubframeWidth, 0);
+        mScrollRangeVert = Math.max(mScrollableHeight - mSubframeHeight, 0);
+
+        return new int[] {mScrollRangeHor, mScrollRangeVert};
     }
 
-    public Bounds visibleItems(final int x1, final int y1, final int x2, final int y2) {
-        int left, right, top, bottom, startX, startY;
-        if (x1 <= fixWidth * FIXED_LEFT) {
-            left = x1 / fixWidth;
-            startX = left * fixWidth - x1;
-        } else {
-            left = (x1 - fixWidth * FIXED_LEFT) / cellWidth + FIXED_LEFT;
-            if (left >= columns) left = columns - 1;                        //      TODO    ???????????????????????
-            startX = fixWidth * FIXED_LEFT + (left - FIXED_LEFT) * cellWidth - x1;
-        }
-        if (x2 <= fixWidth * FIXED_LEFT) {
-            right = x2 / fixWidth;
-        } else {
-            right = (x2 - fixWidth * FIXED_LEFT) / cellWidth + FIXED_LEFT;
-            if (right >= columns) right = columns - 1;
-        }
-        if (y1 <= fixHeight * FIXED_TOP) {
-            top = y1 / fixHeight;
-            startY = top * fixHeight - y1;
-        } else {
-            top = (y1 - fixHeight * FIXED_TOP) / cellHeight + FIXED_TOP;
-            if (top >= rows) top = rows - 1;                                //      TODO    ???????????????????????
-            startY = fixHeight * FIXED_TOP + (top - FIXED_TOP) * cellHeight - y1;
-        }
-        if (y2 <= fixHeight * FIXED_TOP) {
-            bottom = y2 / fixHeight;
-        } else {
-            bottom = (y2 - fixHeight * FIXED_TOP) / cellHeight + FIXED_TOP;
-            if (bottom >= rows) bottom = rows - 1;
-        }
-        return new Bounds(left, right, top, bottom, columns, startX, startY);
+    public Frame visibleItems(int scrollX, int scrollY) {
+        mFrame.setup(scrollX, scrollY);
+        return mFrame;
     }
 
-    public int getColumns() {return columns;}
-    public int getRows() {return rows;}
+    public int getColumns() {return mColumns;}
+    public int getRows() {return mRows;}
+    public int getFixedColumns() { return mFixedColumns; }
+    public int getFixedRows() { return mFixedRows; }
 
-    public int[] calculateScrollableBounds() {
-        int[] bounds = new int[4];
-        bounds[0] = 0;                      //              TODO    fixed columns
-        bounds[1] = fixWidth * FIXED_LEFT + cellWidth * (columns - FIXED_LEFT) - viewWidth;
-        if (bounds[1] < 0) bounds[1] = 0;
-        bounds[2] = 0;                      //              TODO    fixed rows
-        bounds[3] = fixHeight * FIXED_TOP + cellHeight * (rows - FIXED_TOP) - viewHeight;
-        if (bounds[3] < 0) bounds[3] = 0;
-        return bounds;
-    }
+//==================================================================================================
+//==================================================================================================
+//==================================================================================================
 
-//--------------------------------------------------------------------------------------------------
-    public static class Bounds {
-        private int current;
-        private int nextEnd;
-        private final int finish;
-        private final int rowIncrement;
-        private final int cols;
-        private boolean rowSwitched;
-        private final int x;
-        private final int y;
+    public class Frame {
+        private static final int PHASE_END = 0;
+        private static final int PHASE_CORNER = 1;
+        private static final int PHASE_LEFT = 2;
+        private static final int PHASE_TOP = 3;
+        private static final int PHASE_SCROLLABLE = 4;
+        private static final int PHASE_INIT = 5;
+        private int mPhase;
 
-        private Bounds(int left, int right, int top, int bottom, int columns, int startX, int startY) {
-            current = columns * top + left - 1;
-            nextEnd = columns * top + right;
-            finish = columns * bottom + right;
-            rowIncrement = columns - right + left - 1;
-            cols = columns;
-            rowSwitched = false;
-            x = startX;
-            y = startY;
+        private int mColFirst;
+        private int mColLast;
+        private int mRowFirst;
+        private int mRowLast;
+
+        private int mCurrent;
+        private int mNextEnd;
+        private int mFinish;
+        private int mRowIncrement;
+        private boolean mRowSwitched;
+
+        private int startX;
+        private int startY;
+
+        private Frame() { mPhase = PHASE_END; }
+
+        private void setup(int scrollX, int scrollY) {
+            final int colsRef = CellsCoordinator.this.mColumns > 0 ? CellsCoordinator.this.mColumns - 1 : 0;
+            final int rowsRef = CellsCoordinator.this.mRows > 0 ? CellsCoordinator.this.mRows - 1 : 0;
+            final int columnsSkipped = scrollX / CellsCoordinator.this.mCellWidth;
+            final int rowsSkipped = scrollY / CellsCoordinator.this.mCellHeight;
+            mColFirst = Math.min(columnsSkipped
+                    + CellsCoordinator.this.mFixedColumns, colsRef);
+            mColLast = Math.min((scrollX + CellsCoordinator.this.mSubframeWidth) / CellsCoordinator.this.mCellWidth
+                    + CellsCoordinator.this.mFixedColumns, colsRef);
+            mRowFirst = Math.min(rowsSkipped
+                    + CellsCoordinator.this.mFixedRows, rowsRef);
+            mRowLast = Math.min((scrollY + CellsCoordinator.this.mSubframeHeight) / CellsCoordinator.this.mCellHeight
+                    + CellsCoordinator.this.mFixedRows, rowsRef);
+
+            mCurrent = CellsCoordinator.this.mColumns * mRowFirst + mColFirst - 1;
+            mNextEnd = CellsCoordinator.this.mColumns * mRowFirst + mColLast;
+            mFinish = CellsCoordinator.this.mColumns * mRowLast + mColLast;
+            mRowIncrement = CellsCoordinator.this.mColumns - mColLast + mColFirst - 1;
+            mRowSwitched = false;
+            startX = columnsSkipped * CellsCoordinator.this.mCellWidth - scrollX + CellsCoordinator.this.mFixedWidth;
+            startY = rowsSkipped * CellsCoordinator.this.mCellHeight - scrollY + CellsCoordinator.this.mFixedHeight;
+
+            mPhase = PHASE_INIT;
         }
 
         public int next() {
-            rowSwitched = false;
-            if (++current > finish) return -1;
-            if (current > nextEnd) {
-                rowSwitched = true;
-                nextEnd += cols;
-                return current += rowIncrement;
+            mRowSwitched = false;
+            if (++mCurrent > mFinish) return -1;
+            if (mCurrent > mNextEnd) {
+                mRowSwitched = true;
+                mNextEnd += CellsCoordinator.this.mColumns;
+                return mCurrent += mRowIncrement;
             }
-            return current;
+            return mCurrent;
         }
-        public boolean newRow() { return rowSwitched; }
-        public int startX() { return x; }
-        public int startY() { return y; }
+
+        public int[] nextBlock() {
+            switch (--mPhase) {
+                case PHASE_SCROLLABLE:
+                    return new int[] {startX, startY};
+                case PHASE_TOP:
+                    return jumpToTop();
+                case PHASE_LEFT:
+                    return jumpToLeft();
+                case PHASE_CORNER:
+                    return jumpToCorner();
+                default:
+                    return null;
+            }
+        }
+
+        private int[] jumpToTop() {
+            mCurrent = mColFirst - 1;
+            if (CellsCoordinator.this.mFixedRows > 0) {
+                mNextEnd = mColLast;
+                mFinish = (CellsCoordinator.this.mFixedRows - 1) * CellsCoordinator.this.mColumns + mColLast;
+            } else {
+                mFinish = mCurrent;
+            }
+            return new int[] {startX, 0};
+        }
+
+        private int[] jumpToLeft() {
+            mCurrent = mRowFirst * CellsCoordinator.this.mColumns - 1;
+            if (CellsCoordinator.this.mFixedColumns > 0) {
+                mNextEnd = mCurrent + CellsCoordinator.this.mFixedColumns;  //  rowFirst * columns + fixCols - 1 = (cur + 1) + fixCols - 1
+                mFinish = mRowLast * CellsCoordinator.this.mColumns + CellsCoordinator.this.mFixedColumns - 1;
+                mRowIncrement = CellsCoordinator.this.mScrollableColumns;
+            } else {
+                mFinish = mCurrent;
+            }
+            return new int[] {0, startY};
+        }
+
+        private int[] jumpToCorner() {
+            mCurrent = -1;
+            if (CellsCoordinator.this.mFixedColumns > 0 || CellsCoordinator.this.mFixedRows > 0) {
+                mNextEnd = CellsCoordinator.this.getFixedColumns() - 1;
+                mFinish = (CellsCoordinator.this.mFixedRows - 1) * CellsCoordinator.this.mColumns
+                        + CellsCoordinator.this.getFixedColumns() - 1;
+            } else {
+                mFinish = mCurrent;
+            }
+            return new int[] {0, 0};
+        }
+
+        public boolean newRow() { return mRowSwitched; }
     }
 
 //==================================================================================================
