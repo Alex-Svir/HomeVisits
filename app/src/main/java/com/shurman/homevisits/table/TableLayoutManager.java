@@ -4,6 +4,7 @@ import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 
+import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.RecyclerView;
 
 public class TableLayoutManager extends RecyclerView.LayoutManager {
@@ -54,6 +55,8 @@ public class TableLayoutManager extends RecyclerView.LayoutManager {
     public boolean canScrollVertically() { return scrollVert.isScrollable(); }
 
     public void recalculateCellsSizes(RecyclerView.Recycler recycler, RecyclerView.State state, int width, int height) {
+        //detachAndScrapAttachedViews(recycler);
+        //removeAllViews();
         l(" recalculating in progress");
         final int cols = coordinator.getColumns();
         int hdrX = 0, hdrY = 0, cellX = 0, cellY = 0;
@@ -61,7 +64,7 @@ public class TableLayoutManager extends RecyclerView.LayoutManager {
             final View view = recycler.getViewForPosition(i);
             measureChildWithMargins(view, 0, 0);
 
-            int m = view.getMeasuredHeight();                             //  TODO    Rexrakt
+            int m = view.getMeasuredHeight();
             if (i / cols < coordinator.getFixedRows()) { if (hdrY < m) hdrY = m; }
             else { if (cellY < m) cellY = m; }
 
@@ -75,6 +78,7 @@ public class TableLayoutManager extends RecyclerView.LayoutManager {
     }
 
     private void layoutVisibleArea(RecyclerView.Recycler recycler, RecyclerView.State state) {
+        //l(" layouting in progress");
         detachAndScrapAttachedViews(recycler);
         CellsCoordinator.Frame boundItems = coordinator.visibleItems(scrollHor.getPosition(), scrollVert.getPosition());
         int[] coordinates;
@@ -97,9 +101,14 @@ public class TableLayoutManager extends RecyclerView.LayoutManager {
                 layoutDecoratedWithMargins(view, left, top, right, bottom);
                 left = right;
             }
-
         }
         recycler.clear();
+    }
+
+    @Override
+    public void onAdapterChanged(@Nullable RecyclerView.Adapter oldAdapter, @Nullable RecyclerView.Adapter newAdapter) {
+        super.onAdapterChanged(oldAdapter, newAdapter);
+        l("oldAdapter " + (oldAdapter == null ? "-" : "+") + ", newAdapter " + (newAdapter == null ? "-" : "+"));
     }
 
     @Override

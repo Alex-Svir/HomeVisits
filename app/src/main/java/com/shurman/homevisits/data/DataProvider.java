@@ -1,6 +1,7 @@
 package com.shurman.homevisits.data;
 
 import android.content.Context;
+import android.util.Log;
 
 import com.shurman.homevisits.database.DaoVisits;
 import com.shurman.homevisits.database.DataBaseHolder;
@@ -22,6 +23,7 @@ public class DataProvider {
         new Thread(() -> {
                 //  1)  Read database
             List<TableVisits> list = daoVisits(context).loadMonth(year * 100 + month);
+            //list.stream().forEach(vis -> l("\t"+vis._yyyymm+":"+vis._date+"="+vis._price_income+"-"+vis._count));
                 //  2)  If not present in database -- new empty month
             cb.monthParsed(list.size() > 0
                             ? CompositionUtilities.composeMonth(list, year, month)
@@ -55,4 +57,6 @@ public class DataProvider {
     private static DaoVisits daoVisits(Context context) {
         return DataBaseHolder.get(context).daoVisits();
     }
+
+    private static void l(String text) { Log.d("LOG_TAG::", text); }
 }

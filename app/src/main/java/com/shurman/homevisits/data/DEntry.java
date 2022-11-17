@@ -11,5 +11,21 @@ public class DEntry {
         this.count = count;
     }
 
+    public DEntry(int price_salary, int count) {
+        this(price_salary >>> 16, price_salary & 0xFFFF, count);
+    }
+
     public boolean corresponds(DEntry de) { return this.price == de.price && this.salary == de.salary; }
+
+    public static int combinePriceSalary(int price, int salary) {
+        return (price << 16) | salary;
+    }
+
+    public static int priceFromPair(int price_salary) {
+        return price_salary >>> 16;
+    }
+
+    public static int salaryFromPair(int price_salary) {
+        return price_salary & 0xFFFF;
+    }
 }

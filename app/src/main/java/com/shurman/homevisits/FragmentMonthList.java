@@ -63,6 +63,8 @@ public class FragmentMonthList extends Fragment {
         viewModel.monthData().observe(getViewLifecycleOwner(), dm -> {
             mMonthData = dm;
             fillOut();
+
+            //CompositionUtilities.foo(dm);
         });
         viewModel.currMonth();
 

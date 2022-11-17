@@ -13,7 +13,6 @@ import androidx.lifecycle.ViewModelProvider;
 
 import com.shurman.homevisits.data.DMonth;
 import com.shurman.homevisits.table.MonthsTable;
-import com.shurman.homevisits.table.MySuperDuperCustomView;
 
 public class FragmentMonthTable extends Fragment {
     private MainViewModel viewModel;
@@ -24,7 +23,6 @@ public class FragmentMonthTable extends Fragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        //if (inflater != null) return new MySuperDuperCustomView(getContext());
         View root = inflater.inflate(R.layout.fragment_month_table, container, false);
         viewModel = new ViewModelProvider(getActivity()).get(MainViewModel.class);
 
@@ -43,6 +41,7 @@ public class FragmentMonthTable extends Fragment {
     }
 
     private void fillOut() {
-
+        tvMonth.setText(viewModel.getMonthString());
+        mTable.fillTable(dMonth);
     }
 }

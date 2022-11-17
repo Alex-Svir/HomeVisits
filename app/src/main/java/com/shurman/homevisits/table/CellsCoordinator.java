@@ -3,11 +3,8 @@ package com.shurman.homevisits.table;
 import android.util.Log;
 
 public class CellsCoordinator {
-    static final int COLUMNS = 10;
-    static final int CAPACITY = 175;
-//==================================================================================================
-    private static final int FIXED_ROWS = 3;
-    private static final int FIXED_COLS = 2;
+    private static final int FIXED_ROWS = 2;
+    private static final int FIXED_COLS = 1;
 
     private int mColumns;
     private int mRows;
@@ -40,7 +37,7 @@ public class CellsCoordinator {
 
     public CellsCoordinator() {
         mFrame = new Frame();
-        setTableDimensions(COLUMNS, CAPACITY / COLUMNS + (CAPACITY % COLUMNS > 0 ? 1 : 0));     //  TODO
+        setTableDimensions(0, 0);
         setCellDimensions(0,0,0,0,0,0);
     }
 
@@ -119,15 +116,19 @@ public class CellsCoordinator {
         private void setup(int scrollX, int scrollY) {
             final int colsRef = CellsCoordinator.this.mColumns > 0 ? CellsCoordinator.this.mColumns - 1 : 0;
             final int rowsRef = CellsCoordinator.this.mRows > 0 ? CellsCoordinator.this.mRows - 1 : 0;
-            final int columnsSkipped = scrollX / CellsCoordinator.this.mCellWidth;
-            final int rowsSkipped = scrollY / CellsCoordinator.this.mCellHeight;
+            final int columnsSkipped = (0 == CellsCoordinator.this.mCellWidth ? 0 : scrollX / CellsCoordinator.this.mCellWidth);
+            final int rowsSkipped = (0 == CellsCoordinator.this.mCellHeight ? 0 : scrollY / CellsCoordinator.this.mCellHeight);
             mColFirst = Math.min(columnsSkipped
                     + CellsCoordinator.this.mFixedColumns, colsRef);
-            mColLast = Math.min((scrollX + CellsCoordinator.this.mSubframeWidth) / CellsCoordinator.this.mCellWidth
+            mColLast = Math.min(
+                    (0 == CellsCoordinator.this.mCellWidth ?
+                            0 : (scrollX + CellsCoordinator.this.mSubframeWidth) / CellsCoordinator.this.mCellWidth)
                     + CellsCoordinator.this.mFixedColumns, colsRef);
             mRowFirst = Math.min(rowsSkipped
                     + CellsCoordinator.this.mFixedRows, rowsRef);
-            mRowLast = Math.min((scrollY + CellsCoordinator.this.mSubframeHeight) / CellsCoordinator.this.mCellHeight
+            mRowLast = Math.min(
+                    (0 == CellsCoordinator.this.mCellHeight ?
+                        0 : (scrollY + CellsCoordinator.this.mSubframeHeight) / CellsCoordinator.this.mCellHeight)
                     + CellsCoordinator.this.mFixedRows, rowsRef);
 
             mCurrent = CellsCoordinator.this.mColumns * mRowFirst + mColFirst - 1;

@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <drawable name="imageButtonLessPic">@android:drawable/ic_media_rew</drawable>
+    <drawable name="imageButtonMorePic">@android:drawable/ic_media_ff</drawable>
+    <drawable name="imageButtonPrevPic">@android:drawable/ic_media_previous</drawable>
+    <drawable name="imageButtonNextPic">@android:drawable/ic_media_next</drawable>
+</resources>

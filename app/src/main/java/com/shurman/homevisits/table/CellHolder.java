@@ -1,14 +1,17 @@
 package com.shurman.homevisits.table;
 
 import android.view.View;
+import android.widget.TextView;
 
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.shurman.homevisits.R;
+
 public class CellHolder extends RecyclerView.ViewHolder {
-    View v;
+    TextView tv;
     public CellHolder(View view) {
         super(view);
-        v = view;
+        tv = view.findViewById(R.id.text);
     }
-    public View view() {return v;}
+    public TextView text() {return tv;}
 }
