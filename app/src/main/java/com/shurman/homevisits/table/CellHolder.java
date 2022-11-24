@@ -8,10 +8,10 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.shurman.homevisits.R;
 
 public class CellHolder extends RecyclerView.ViewHolder {
-    TextView tv;
+    private final TextView tv;
     public CellHolder(View view) {
         super(view);
         tv = view.findViewById(R.id.text);
     }
-    public TextView text() {return tv;}
+    public void text(String text) { tv.setText(text); }
 }

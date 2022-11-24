@@ -29,6 +29,7 @@ public class MainActivity extends AppCompatActivity {
         viewModel.navLiveData().observe(this, nav -> goToScreen(nav.screen()));
 
         if (savedInstanceState == null) { viewModel.requestScreen(AppNavigator.Request.DAYS); }
+
     }
 
     @Override

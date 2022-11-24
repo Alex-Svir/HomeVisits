@@ -4,6 +4,7 @@ import android.util.Log;
 
 import com.shurman.homevisits.Presets;
 import com.shurman.homevisits.database.TableVisits;
+import com.shurman.homevisits.table.TableDataCarrier;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -12,6 +13,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 import java.util.stream.Stream;
 
 public class CompositionUtilities {     //  TODO    SLABO improve it???
@@ -59,39 +61,58 @@ public class CompositionUtilities {     //  TODO    SLABO improve it???
         return result;
     }
 
-    public static ArrayList<Integer> tableMonthsHeaders(DMonth month) {
+    public static TableDataCarrier composeTableData(DMonth month) {
+    //public static ArrayList<Integer> tableMonthsHeaders(DMonth month) {
+        TableDataCarrier tableData = new TableDataCarrier();
         int[] headerPairs = Stream.concat(Presets.presetPriceList().stream(),
                                     month.getDays().stream().flatMap(d -> d.entries().stream()))
                     .mapToInt(e -> DEntry.combinePriceSalary(e.price, e.salary))
                     .sorted().distinct().toArray();
-        int columns = headerPairs.length + 1;
-        ArrayList<Integer> fixedRows = new ArrayList<>(columns << 1);
-        fixedRows.add(columns);
-        Arrays.stream(headerPairs).forEach(i -> fixedRows.add(DEntry.priceFromPair(i)));
-        fixedRows.add(0);
-        Arrays.stream(headerPairs).forEach(i -> fixedRows.add(DEntry.salaryFromPair(i)));
-        return fixedRows;
-    }
-
-    public static ArrayList<DEntry> tableMonthsMatrix(DMonth month, List<Integer> headers) {
-        int columns = headers.get(0);
-        ArrayList<DEntry> matrix = new ArrayList<>(columns * month.length());
+        tableData.columns = headerPairs.length + 1;
+        tableData.topHeaders = new ArrayList<>(tableData.columns << 1);
+        tableData.topHeaders.add(tableData.columns);
+        Arrays.stream(headerPairs).forEach(i -> tableData.topHeaders.add(DEntry.priceFromPair(i)));
+        tableData.topHeaders.add(0);
+        Arrays.stream(headerPairs).forEach(i -> tableData.topHeaders.add(DEntry.salaryFromPair(i)));
+        //return fixedRows;
+    //}
+    //public static ArrayList<DEntry> tableMonthsMatrix(DMonth month, List<Integer> headers) {
+        //int columns = headers.get(0);
+        tableData.matrix = new ArrayList<>(tableData.columns * month.length());
         for (int d = 1; d <= month.length(); ++d) {
-            matrix.add(null);
-            final List<DEntry> entries = month.date(d).entries();
-            for (int h1 = 1, h2 = columns+1, e = 0; h1 < columns; ++h1, ++h2) {
+            tableData.matrix.add(null);
+            List<DEntry> entries = month.date(d).entries();
+            for (int h1 = 1, h2 = tableData.columns + 1, e = 0; h1 < tableData.columns; ++h1, ++h2) {
                 if (e < entries.size()) {
-                    final DEntry dEntry = entries.get(e);
-                    if (headers.get(h1).equals(dEntry.price) && headers.get(h2).equals(dEntry.salary)) {
-                        matrix.add(dEntry);
+                    DEntry dEntry = entries.get(e);
+                    if (tableData.topHeaders.get(h1).equals(dEntry.price) && tableData.topHeaders.get(h2).equals(dEntry.salary)) {
+                        tableData.matrix.add(dEntry);
                         e++;
                         continue;
                     }
                 }
-                matrix.add(null);
+                tableData.matrix.add(null);
             }
         }
-        return matrix;
+
+        tableData.bottomSummary = new ArrayList<>(tableData.columns << 1);
+        IntStream.range(0, tableData.columns).forEach(i -> tableData.bottomSummary.add(0));
+        int col = tableData.columns;
+        for (DEntry de : tableData.matrix) {
+            if (col == tableData.columns) col = 1;
+            else {
+                if (de != null) tableData.bottomSummary.set(col, tableData.bottomSummary.get(col) + de.count);
+                ++col;
+            }
+        }
+
+        tableData.bottomSummary.add(0);
+        for (int c1 = 1, c2 = tableData.columns + 1; c1 < tableData.columns; ++c1, ++c2) {
+            tableData.bottomSummary.add(tableData.topHeaders.get(c2) * tableData.bottomSummary.get(c1));
+        }
+
+        tableData.rows = month.length() + 4;
+        return tableData;
     }
 
     public static Comparator<DEntry> dEntryComparator = (e1, e2) -> {

@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    style="@style/Theme.HomeVisits.Table.Back.Middle"
+    style="@style/Theme.HomeVisits.Table.Back.Top"
     android:gravity="center">
     <TextView
         android:id="@+id/text"
-        style="@style/Theme.HomeVisits.Table.Font.Middle"/>
+        style="@style/Theme.HomeVisits.Table.Font.Top"/>
 </LinearLayout>

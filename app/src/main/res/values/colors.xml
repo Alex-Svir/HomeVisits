@@ -7,4 +7,11 @@
     <color name="teal_700">#FF018786</color>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+<!-- ================================= CUSTOM ================================== -->
+    <color name="table_text_top">#A52A2A</color>
+    <color name="table_text_bottom">#FF0000</color>
+    <color name="table_text_matrix">#008000</color>
+    <color name="table_back_top">#FFFDFA</color>
+    <color name="table_back_bottom">#FFFDFB</color>
+    <color name="table_back_matrix">#FCFFFC</color>
 </resources>

@@ -43,6 +43,7 @@
         android:id="@+id/bt_more"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginEnd="@dimen/list_day_swipe_saver_right"
         android:src="@drawable/imageButtonMorePic"
         android:contentDescription="@string/cont_desc_more"
         app:layout_constraintTop_toTopOf="parent"

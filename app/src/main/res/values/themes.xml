@@ -13,4 +13,38 @@
         <item name="android:statusBarColor" tools:targetApi="l">?attr/colorPrimaryVariant</item>
         <!-- Customize your theme here. -->
     </style>
+<!-- ======================================= CUSTOM ============================================ -->
+    <style name="Theme.HomeVisits.Table">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+    </style>
+    <style name="Theme.HomeVisits.Table.Back">
+        <item name="android:paddingLeft">@dimen/table_month_item_padding_hor</item>
+        <item name="android:paddingRight">@dimen/table_month_item_padding_hor</item>
+        <item name="android:paddingTop">@dimen/table_month_item_padding_vert</item>
+        <item name="android:paddingBottom">@dimen/table_month_item_padding_vert</item>
+    </style>
+    <style name="Theme.HomeVisits.Table.Font">
+        <item name="android:textAppearance">@style/TextAppearance.AppCompat.Medium</item>
+    </style>
+    <style name="Theme.HomeVisits.Table.Font.Top">
+        <item name="android:textColor">@color/table_text_top</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+    <style name="Theme.HomeVisits.Table.Font.Bottom">
+        <item name="android:textColor">@color/table_text_bottom</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+    <style name="Theme.HomeVisits.Table.Font.Middle">
+        <item name="android:textColor">@color/table_text_matrix</item>
+    </style>
+    <style name="Theme.HomeVisits.Table.Back.Top">
+        <item name="android:background">@drawable/table_back_top</item>
+    </style>
+    <style name="Theme.HomeVisits.Table.Back.Bottom">
+        <item name="android:background">@drawable/table_back_bottom</item>
+    </style>
+    <style name="Theme.HomeVisits.Table.Back.Middle">
+        <item name="android:background">@drawable/table_back_data</item>
+    </style>
 </resources>
