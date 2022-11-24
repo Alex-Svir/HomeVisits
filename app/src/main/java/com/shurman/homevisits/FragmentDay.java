@@ -75,7 +75,8 @@ public class FragmentDay extends Fragment implements DayListAdapter.CountersWatc
         mTotalIncome = mDayData.entries().stream().mapToInt(entry -> entry.count * entry.salary).sum();
         offsetFromToday = viewModel.getDatesDifference();
         tvDate.setText(viewModel.getDateString());
-        tvDaysDiff.setText(RepresentationUtilities.representDaysOffset(getContext(), viewModel.getDatesDifference()));
+        //tvDaysDiff.setText(RepresentationUtilities.representDaysOffset(getContext(), viewModel.getDatesDifference()));
+        tvDaysDiff.setText(RepresentationUtilities.representDaysOffset(getContext(), offsetFromToday));
         //lvEntries.setAdapter(listAdapter = new DayListAdapter(getContext(), mDayData.entries(), this));
         listAdapter.reset(mDayData.entries());
         tvTotalVisits.setText(String.valueOf(mTotalVisits));
@@ -90,6 +91,8 @@ public class FragmentDay extends Fragment implements DayListAdapter.CountersWatc
     }
 
     private void leaveEnterMode() {
+        if (offsetFromToday != 0)
+            listAdapter.setList(mDayData.trimZeroes());
         listAdapter.edit(false);
     }
 

@@ -2,6 +2,7 @@ package com.shurman.homevisits.data;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class DDay {
     private final int year;
@@ -34,10 +35,10 @@ public class DDay {
      * @param preset must be presorted
      */
     public boolean expandIfCorresponds(List<DEntry> preset) {
-        entries.sort((e1, e2) -> {
+        entries.sort(/*(e1, e2) -> {
             if (e1.price == e2.price) return e1.salary - e2.salary;
             return e1.price - e2.price;
-        });
+        }*/DEntry.comparator);
 
         if (preset.size() <= entries.size())
             return false;
@@ -106,5 +107,10 @@ public class DDay {
         while (posEntries < entries.size()) { result.add(entries.get(posEntries++)); }
         entries = result;
         return true;
+    }
+
+    public List<DEntry> trimZeroes() {
+        return entries = entries.stream()
+                .filter(e -> e.count > 0).collect(Collectors.toCollection(ArrayList::new));
     }
 }

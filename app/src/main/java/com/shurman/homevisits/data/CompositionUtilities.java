@@ -57,7 +57,7 @@ public class CompositionUtilities {     //  TODO    SLABO improve it???
         result.sort(/*(e1, e2) -> {
             if (e1.price == e2.price) return e1.salary - e2.salary;
             return e1.price - e2.price;
-        }*/dEntryComparator);
+        }*/DEntry.comparator);
         return result;
     }
 
@@ -114,11 +114,6 @@ public class CompositionUtilities {     //  TODO    SLABO improve it???
         tableData.rows = month.length() + 4;
         return tableData;
     }
-
-    public static Comparator<DEntry> dEntryComparator = (e1, e2) -> {
-        if (e1.price == e2.price) return e1.salary - e2.salary;
-            return e1.price - e2.price;
-    };
 
     private static void l(String text) { Log.d("LOG_TAG::", text); }
 }

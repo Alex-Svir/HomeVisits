@@ -72,7 +72,5 @@ public class DayListAdapter extends BaseAdapter {
         return view;
     }
 
-    private static void l(String text) {
-        Log.d("LOG_TAG::DLAdapter::", text);
-    }
+    private static void l(String text) { Log.d("LOG_TAG::DLAdapter::", text); }
 }

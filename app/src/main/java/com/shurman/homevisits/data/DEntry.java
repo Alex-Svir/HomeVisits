@@ -1,5 +1,7 @@
 package com.shurman.homevisits.data;
 
+import java.util.Comparator;
+
 public class DEntry {
     public int price;
     public int salary;
@@ -28,4 +30,9 @@ public class DEntry {
     public static int salaryFromPair(int price_salary) {
         return price_salary & 0xFFFF;
     }
+
+    public static Comparator<DEntry> comparator = (e1, e2) -> {
+        if (e1.price == e2.price) return e1.salary - e2.salary;
+        return e1.price - e2.price;
+    };
 }
