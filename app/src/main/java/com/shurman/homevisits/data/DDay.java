@@ -35,10 +35,7 @@ public class DDay {
      * @param preset must be presorted
      */
     public boolean expandIfCorresponds(List<DEntry> preset) {
-        entries.sort(/*(e1, e2) -> {
-            if (e1.price == e2.price) return e1.salary - e2.salary;
-            return e1.price - e2.price;
-        }*/DEntry.comparator);
+        entries.sort(DEntry.comparator);
 
         if (preset.size() <= entries.size())
             return false;

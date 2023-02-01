@@ -6,7 +6,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Presets {
-    public static List<DEntry> presetPriceList() {
+
+    public static List<DEntry> __presetPriceList() {
         List<DEntry> list = new ArrayList<>();
         list.add(new DEntry(180, 63, 0));
         list.add(new DEntry(215, 75, 0));

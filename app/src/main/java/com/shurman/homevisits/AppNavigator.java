@@ -1,10 +1,12 @@
 package com.shurman.homevisits;
 
 public class AppNavigator {
-    public enum Request {DAYS, MONTHS, YEARS}
-    public enum Screen {DAYS, MONTHS_LIST, MONTHS_TABLE, YEARS}
+    public enum Request {DAYS, MONTHS, YEARS, PREFS}
+    public enum Screen {DAYS, MONTHS_LIST, MONTHS_TABLE, YEARS, PREFS, LAUNCH}
 
     private Screen mScreen;
+
+    public AppNavigator() { mScreen = Screen.LAUNCH; }
 
     public AppNavigator(Request reqScreen) {
         goTo(reqScreen);
@@ -20,6 +22,9 @@ public class AppNavigator {
                 break;
             case YEARS:
                 mScreen = Screen.YEARS;
+                break;
+            case PREFS:
+                mScreen = Screen.PREFS;
                 break;
         }
     }

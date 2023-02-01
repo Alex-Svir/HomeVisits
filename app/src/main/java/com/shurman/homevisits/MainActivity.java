@@ -3,6 +3,7 @@ package com.shurman.homevisits;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.ViewModelProvider;
 
 import android.os.Bundle;
@@ -12,13 +13,10 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.MotionEvent;
 
+import com.shurman.homevisits.preferences.FragmentPreferences;
+
 public class MainActivity extends AppCompatActivity {
-    private static final int MENU_ITEM_EDIT = 1;
-    private static final int MENU_ITEM_DAYS = 2;
-    private static final int MENU_ITEM_MONTH = 4;
-    private static final int MENU_ITEM_YEAR = 8;
     private MainViewModel viewModel;
-    private int mMenuItemsDrop;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,34 +26,28 @@ public class MainActivity extends AppCompatActivity {
 
         viewModel.navLiveData().observe(this, nav -> goToScreen(nav.screen()));
 
-        if (savedInstanceState == null) { viewModel.requestScreen(AppNavigator.Request.DAYS); }
-
+        if (savedInstanceState == null) { viewModel.appInitialLoad(); }
     }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.menu_main, menu);
-        int dropPtr = 1;
-        int itemPtr = 0;
-        while (dropPtr <= mMenuItemsDrop) {
-            if ((dropPtr & mMenuItemsDrop) != 0) { menu.getItem(itemPtr).setVisible(false); }
-            dropPtr <<= 1;
-            itemPtr++;
-        }
+        MenuComposer.composeMenu(menu, viewModel.getCurrentScreen());
         return true;
     }
 
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         int id = item.getItemId();
-        if (id == R.id.edit) {
+        if (id == MenuComposer.ITEM_EDIT) {
             viewModel.toggleEditMode();
-        } else if (id == R.id.month) {
+        } else if (id == MenuComposer.ITEM_MONTH) {
             viewModel.requestScreen(AppNavigator.Request.MONTHS);
-        } else if (id == R.id.day) {
+        } else if (id == MenuComposer.ITEM_DAY) {
             viewModel.requestScreen(AppNavigator.Request.DAYS);
-        } else if (id == R.id.year) {
-            //viewModel.requestScreen(AppNavigator.Request.YEARS);
+        } else if (id == MenuComposer.ITEM_YEAR) {
+
+        } else if (id == MenuComposer.ITEM_PREFS) {
+            viewModel.requestScreen(AppNavigator.Request.PREFS);
         }
         return true;
     }
@@ -65,22 +57,22 @@ public class MainActivity extends AppCompatActivity {
         switch (screen) {
             case DAYS:
                 frag = new FragmentDay();
-                mMenuItemsDrop = MENU_ITEM_DAYS;
                 break;
             case MONTHS_LIST:
                 frag = new FragmentMonthList();
-                mMenuItemsDrop = MENU_ITEM_EDIT;
                 break;
             case MONTHS_TABLE:
                 frag = new FragmentMonthTable();
-                mMenuItemsDrop = MENU_ITEM_EDIT;
+                break;
+            case PREFS:
+                frag = new FragmentPreferences();
                 break;
             default:
                 frag = new FragmentDay();
-                mMenuItemsDrop = MENU_ITEM_EDIT | MENU_ITEM_YEAR;   //  as for year
                 break;
         }
-        getSupportFragmentManager().beginTransaction().replace(R.id.frag_root, frag).commit();
+        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+        transaction.replace(R.id.frag_root, frag).commit();
         invalidateOptionsMenu();
     }
 //========================================================================================================================

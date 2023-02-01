@@ -7,13 +7,16 @@ import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
+import com.shurman.homevisits.data.AppInitialLoader;
 import com.shurman.homevisits.data.DDay;
+import com.shurman.homevisits.data.DEntry;
 import com.shurman.homevisits.data.DMonth;
 import com.shurman.homevisits.data.DataProvider;
 import com.shurman.homevisits.database.DataLoad;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class MainViewModel extends AndroidViewModel implements DataLoad.Month {
     private final List<DMonth> months;
@@ -22,13 +25,14 @@ public class MainViewModel extends AndroidViewModel implements DataLoad.Month {
     private MutableLiveData<DDay> dDayData = null;
     private MutableLiveData<DMonth> dMonthData = null;
     private final MutableLiveData<Boolean> inEditMode;
+    private ArrayList<DEntry> expansionPriceList;
 
     public MainViewModel(Application application) {
         super(application);
         months = new ArrayList<>();
         datePtr = new DatePager();
         inEditMode = new MutableLiveData<>(false);
-        navData = new MutableLiveData<>();
+        navData = new MutableLiveData<>(new AppNavigator());
     }
 
     public LiveData<Boolean> editModeData() { return inEditMode; }
@@ -42,7 +46,12 @@ public class MainViewModel extends AndroidViewModel implements DataLoad.Month {
         AppNavigator an = navData.getValue();
         if (an == null) an = new AppNavigator(screen);
         else an.goTo(screen);
-        navData.setValue(an);
+        navData.postValue(an);
+    }
+
+    public AppNavigator.Screen getCurrentScreen() {
+        assert navData.getValue() != null : "In MainViewModel: navData value == null";
+        return navData.getValue().screen();
     }
 
     public LiveData<DDay> dayData() {
@@ -123,6 +132,23 @@ public class MainViewModel extends AndroidViewModel implements DataLoad.Month {
     public String getDateString() { return datePtr.dateString(); }
     public String getMonthString() { return datePtr.monthString(); }
     public int getDatesDifference() { return datePtr.daysFromToday(); }
+
+    public void appInitialLoad() {
+        AppInitialLoader.load(getApplication(), result -> {
+            expansionPriceList = result.priceList.stream()
+                    .map(i -> new DEntry(i, 0))
+                    .collect(ArrayList::new, ArrayList::add, ArrayList::addAll);
+            requestScreen(AppNavigator.Request.DAYS);
+        });
+    }
+
+    public ArrayList<DEntry> getExpansionPriceList() {
+        return expansionPriceList;
+    }
+
+    public void updateExpansionPriceList(ArrayList<DEntry> updatedList) {
+        expansionPriceList = updatedList;
+    }
 
     private static void l(String text) { Log.d("LOG_TAG::", text); }
 }

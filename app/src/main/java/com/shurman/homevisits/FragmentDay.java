@@ -85,7 +85,7 @@ public class FragmentDay extends Fragment implements DayListAdapter.CountersWatc
     }
 
     private void enterEditMode() {
-        if (mDayData.expandIfCorresponds(Presets.presetPriceList()))
+        if (mDayData.expandIfCorresponds(viewModel.getExpansionPriceList()))
             listAdapter.setList(mDayData.entries());
         listAdapter.edit(true);
     }

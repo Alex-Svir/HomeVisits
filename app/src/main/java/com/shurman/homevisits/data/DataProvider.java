@@ -6,6 +6,7 @@ import android.util.Log;
 import com.shurman.homevisits.database.DaoVisits;
 import com.shurman.homevisits.database.DataBaseHolder;
 import com.shurman.homevisits.database.DataLoad;
+import com.shurman.homevisits.database.TablePricelist;
 import com.shurman.homevisits.database.TableVisits;
 
 import java.util.ArrayList;
@@ -52,6 +53,19 @@ public class DataProvider {
          * - if 'altered' posted while saving process, callback understands that alteration performed
          *      after saving has initialized and does not drop 'altered' state
          */
+    }
+
+    public static void savePriceList(Context context, List<DEntry> priceList) {
+        new Thread(() -> {
+            DaoVisits dao = daoVisits(context);
+            dao.dropPrices();
+            dao.savePriceList(priceList.stream().map(de -> {
+                TablePricelist tpl = new TablePricelist();
+                tpl._price_salary = de.getCombinedPriceSalary();
+                tpl._in_use = true;
+                return tpl;
+            }).collect(Collectors.toList()));
+        }).start();
     }
 
     private static DaoVisits daoVisits(Context context) {

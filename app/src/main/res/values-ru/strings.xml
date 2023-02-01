@@ -1,8 +1,6 @@
 <resources>
     <string name="app_name">Home Visits</string>
 
-    <string name="hihi">Пясдата!</string>
-
     <string name="total_visits_hint">Итого визитов:</string>
     <string name="total_income_hint">Моя зарплата:</string>
 
@@ -15,6 +13,16 @@
     <string name="menu_main_month">Месяц</string>
     <string name="menu_main_day">День</string>
     <string name="menu_main_year">Год</string>
+    <string name="menu_main_prefs">Настройки</string>
+    <string name="menu_main_back">Назад</string>
+
+    <string name="prefs_pricelist_title">Прейскурант цен</string>
+    <string name="prefs_pricelist_summary">Задайте пары "такса-зарплата"</string>
+    <string name="dialog_prefs_pricelist_placeholder">Жми \"Добавить\"</string>
+    <string name="dialog_prefs_pairs_input_err">Повнимательнее, дружище!</string>
+
+    <string name="hint_price">Такса</string>
+    <string name="hint_income">З/П</string>
 
     <string name="cont_desc_prev">пред</string>
     <string name="cont_desc_next">след</string>

@@ -71,6 +71,4 @@ public class DayListAdapter extends BaseAdapter {
         btMore.setVisibility(editable ? View.VISIBLE : View.INVISIBLE);
         return view;
     }
-
-    private static void l(String text) { Log.d("LOG_TAG::DLAdapter::", text); }
 }

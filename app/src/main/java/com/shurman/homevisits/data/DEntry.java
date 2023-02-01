@@ -17,6 +17,14 @@ public class DEntry {
         this(price_salary >>> 16, price_salary & 0xFFFF, count);
     }
 
+    public DEntry(DEntry de) {
+        this(de.price, de.salary, de.count);
+    }
+
+    public int getCombinedPriceSalary() {
+        return combinePriceSalary(price, salary);
+    }
+
     public boolean corresponds(DEntry de) { return this.price == de.price && this.salary == de.salary; }
 
     public static int combinePriceSalary(int price, int salary) {

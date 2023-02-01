@@ -1,8 +1,5 @@
 package com.shurman.homevisits.data;
 
-import android.util.Log;
-
-import com.shurman.homevisits.Presets;
 import com.shurman.homevisits.database.TableVisits;
 import com.shurman.homevisits.table.TableDataCarrier;
 
@@ -34,11 +31,7 @@ public class CompositionUtilities {     //  TODO    SLABO improve it???
             while (d > days.size() + 1) days.add(new DDay(year, month, days.size() + 1));
             days.add(new DDay(year, month, d, en.getValue()));
         });
-        /*
-        map.forEach((d, de) -> {
-            while (d > days.size() + 1) days.add(new DDay(year, month, days.size() + 1));
-            days.add(new DDay(year, month, d, de));
-        });*/
+
         while (days.size() < 31) days.add(new DDay(year, month, days.size() + 1));
         return new DMonth(year, month, days);
     }
@@ -54,17 +47,13 @@ public class CompositionUtilities {     //  TODO    SLABO improve it???
                 ));
         List<DEntry> result = new ArrayList<>(map.size());
         map.forEach((ps, c) -> result.add(new DEntry(ps, c)));
-        result.sort(/*(e1, e2) -> {
-            if (e1.price == e2.price) return e1.salary - e2.salary;
-            return e1.price - e2.price;
-        }*/DEntry.comparator);
+        result.sort(DEntry.comparator);
         return result;
     }
 
-    public static TableDataCarrier composeTableData(DMonth month) {
-    //public static ArrayList<Integer> tableMonthsHeaders(DMonth month) {
+    public static TableDataCarrier composeTableData(DMonth month, List<DEntry> samplePriceList) {
         TableDataCarrier tableData = new TableDataCarrier();
-        int[] headerPairs = Stream.concat(Presets.presetPriceList().stream(),
+        int[] headerPairs = Stream.concat(samplePriceList.stream(),
                                     month.getDays().stream().flatMap(d -> d.entries().stream()))
                     .mapToInt(e -> DEntry.combinePriceSalary(e.price, e.salary))
                     .sorted().distinct().toArray();
@@ -74,10 +63,7 @@ public class CompositionUtilities {     //  TODO    SLABO improve it???
         Arrays.stream(headerPairs).forEach(i -> tableData.topHeaders.add(DEntry.priceFromPair(i)));
         tableData.topHeaders.add(0);
         Arrays.stream(headerPairs).forEach(i -> tableData.topHeaders.add(DEntry.salaryFromPair(i)));
-        //return fixedRows;
-    //}
-    //public static ArrayList<DEntry> tableMonthsMatrix(DMonth month, List<Integer> headers) {
-        //int columns = headers.get(0);
+
         tableData.matrix = new ArrayList<>(tableData.columns * month.length());
         for (int d = 1; d <= month.length(); ++d) {
             tableData.matrix.add(null);
@@ -114,6 +100,4 @@ public class CompositionUtilities {     //  TODO    SLABO improve it???
         tableData.rows = month.length() + 4;
         return tableData;
     }
-
-    private static void l(String text) { Log.d("LOG_TAG::", text); }
 }

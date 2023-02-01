@@ -13,6 +13,17 @@
     <string name="menu_main_month">Month</string>
     <string name="menu_main_day">Day</string>
     <string name="menu_main_year">Year</string>
+    <string name="menu_main_prefs">Settings</string>
+    <string name="menu_main_back">Back</string>
+
+    <string name="prefs_pricelist_key" translatable="false">prices</string>
+    <string name="prefs_pricelist_title">PriceList</string>
+    <string name="prefs_pricelist_summary">Set up "price/income" pairs</string>
+    <string name="dialog_prefs_pricelist_placeholder">Press \"ADD\" button</string>
+    <string name="dialog_prefs_pairs_input_err">Wrong data entered</string>
+
+    <string name="hint_price">Price</string>
+    <string name="hint_income">Income</string>
 
     <string name="cont_desc_prev">prev</string>
     <string name="cont_desc_next">next</string>
