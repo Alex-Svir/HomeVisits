@@ -15,8 +15,6 @@ dependencyResolutionManagement {
     }
 }
 
-//includeBuild('../libs/BlindedView')
-
 rootProject.name = "Home Visits"
 include ':app'
 

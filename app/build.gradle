@@ -40,8 +40,8 @@ dependencies {
     }
 
     implementation 'com.github.Alex-Svir:BlindedView:master-SNAPSHOT'
-    //implementation 'BlindedView:blindedview'
-    //implementation 'com.github.Alex-Svir:TableLayoutManager:master-SNAPSHOT'
+    //implementation 'com.github.Alex-Svir:TableLayoutManager:0475cc6'
+    implementation 'com.github.Alex-Svir:TableLayoutManager:master-SNAPSHOT'
 
     testImplementation 'junit:junit:4.13.2'
     androidTestImplementation 'androidx.test.ext:junit:1.1.3'
