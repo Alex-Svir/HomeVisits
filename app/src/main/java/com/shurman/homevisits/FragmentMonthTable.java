@@ -49,7 +49,7 @@ public class FragmentMonthTable extends Fragment {
 
     private void fillOut() {
         tvMonth.setText(viewModel.getMonthString());
-        mTable.fillTable(dMonth);
+        mTable.fillTable(dMonth, viewModel.getExpansionPriceList());
     }
 
     private boolean detectLandscape() {

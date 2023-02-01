@@ -1,13 +1,18 @@
 package com.shurman.homevisits.table;
 
-import android.util.Log;
 import android.view.View;
 
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.shurman.homevisits.R;
 import com.shurman.homevisits.data.CompositionUtilities;
+import com.shurman.homevisits.data.DEntry;
 import com.shurman.homevisits.data.DMonth;
+
+import org.shurman.tablelayoutmanager.SimpleCellBordersDecoration;
+import org.shurman.tablelayoutmanager.TableLayoutManager;
+
+import java.util.List;
 
 public class MonthsTable {
     private final RecyclerView rvTable;
@@ -19,15 +24,12 @@ public class MonthsTable {
         rvTable = root.findViewById(R.id.rv_table);
         rvTable.setAdapter(adapter = new Adapter());
         rvTable.setLayoutManager(lManager = new TableLayoutManager());
-        //rvTable.addItemDecoration(new FixedBorders());
-        //rvTable.addItemDecoration(new FrameDrawer());
+        rvTable.addItemDecoration(new SimpleCellBordersDecoration());
     }
 
-    public void fillTable(DMonth month) {
-        TableDataCarrier tableData = CompositionUtilities.composeTableData(month);
+    public void fillTable(DMonth month, List<DEntry> samplePriceList) {
+        TableDataCarrier tableData = CompositionUtilities.composeTableData(month, samplePriceList);
         lManager.reset(tableData.columns, tableData.rows, 2, 1, 0, 2);
         adapter.reset(tableData);
     }
-
-    private static void l(String text) { Log.d("LOG_TAG::", text); }
 }
