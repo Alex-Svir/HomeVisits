@@ -39,12 +39,12 @@
         <item name="android:textColor">@color/table_text_matrix</item>
     </style>
     <style name="Theme.HomeVisits.Table.Back.Top">
-        <item name="android:background">@drawable/table_back_top</item>
+        <item name="android:background">@color/table_back_top</item>
     </style>
     <style name="Theme.HomeVisits.Table.Back.Bottom">
-        <item name="android:background">@drawable/table_back_bottom</item>
+        <item name="android:background">@color/table_back_bottom</item>
     </style>
     <style name="Theme.HomeVisits.Table.Back.Middle">
-        <item name="android:background">@drawable/table_back_data</item>
+        <item name="android:background">@color/table_back_matrix</item>
     </style>
 </resources>
