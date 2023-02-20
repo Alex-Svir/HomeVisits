@@ -14,4 +14,13 @@
     <color name="table_back_top">#FFFDFA</color>
     <color name="table_back_bottom">#FFFDFB</color>
     <color name="table_back_matrix">#FCFFFC</color>
+
+    <color name="pref_dialog_pricelist_item_border_a">#DCDCDC</color>
+    <color name="pref_dialog_pricelist_item_border_b">#D3D3D3</color>
+    <color name="pref_dialog_pricelist_item_border_c">#C0C0C0</color>
+    <color name="pref_dialog_pricelist_item_border_d">#A9A9A9</color>
+    <color name="pref_dialog_pricelist_item_border_e">#808080</color>
+    <color name="pref_dialog_pricelist_item_border_f">#696969</color>
+    <color name="pref_dialog_pricelist_item_border_g">#778899</color>
+    <color name="pref_dialog_pricelist_item_border_h">#708090</color>
 </resources>

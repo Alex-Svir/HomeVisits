@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<shape xmlns:android="http://schemas.android.com/apk/res/android">
+    <gradient
+        android:startColor="@color/pref_dialog_pricelist_item_border_h"
+        android:centerColor="@color/pref_dialog_pricelist_item_border_g"
+        android:endColor="@color/pref_dialog_pricelist_item_border_h"
+        android:angle="0"/>
+</shape>

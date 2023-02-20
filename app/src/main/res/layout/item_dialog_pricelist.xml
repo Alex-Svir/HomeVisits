@@ -10,6 +10,7 @@
         android:id="@+id/blind"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:background="?attr/colorSecondary"
         android:minHeight="?attr/listPreferredItemHeight"
         app:drawableLeft="@android:drawable/ic_menu_edit"
         app:drawableRight="@android:drawable/ic_menu_delete"
@@ -17,8 +18,11 @@
         app:latchRelease="0.3"
         app:fontTypeface="bold|italic"
         app:fontColor="?android:attr/textColorPrimary"
-        app:fontSize="22sp"
+        app:fontSize="@dimen/pref_dial_pricelist_textsize"
+
         />
+    <!-- app:blindBack="@drawable/border_list_item" -->
+    <!--  -->
     <LinearLayout
         android:id="@+id/edit"
         android:layout_width="match_parent"

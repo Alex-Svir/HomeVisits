@@ -54,7 +54,7 @@ public class DialogPriceList extends DialogFragment {
         root.findViewById(R.id.bt_back).setOnClickListener(v -> dismiss());
         root.findViewById(R.id.bt_ok).setOnClickListener(v -> {//todo
             if (mWatcher != null) {
-                if (mValues.get(mValues.size() - 1) == null) {
+                if (mValues.size() > 0 && mValues.get(mValues.size() - 1) == null) {
                     mValues.remove(mValues.size() - 1);
                 }
                 mWatcher.onSave(mValues);

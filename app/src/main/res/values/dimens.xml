@@ -32,4 +32,8 @@
 
     <dimen name="table_month_item_padding_hor">8dp</dimen>
     <dimen name="table_month_item_padding_vert">4dp</dimen>
+
+    <dimen name="pref_dial_pricelist_textsize">24sp</dimen>
+
+    <dimen name="pref_dialog_pricelist_divider_height">1dp</dimen>
 </resources>
