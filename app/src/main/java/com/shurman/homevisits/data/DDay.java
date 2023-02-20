@@ -47,13 +47,13 @@ public class DDay {
             if (preset.get(posPreset).corresponds(entries.get(posList)))
                 result.add(entries.get(posList++));
             else
-                result.add(preset.get(posPreset));
+                result.add(new DEntry(preset.get(posPreset)));
             posPreset++;
         }
         if (posList < entries.size())
             return false;
         while (posPreset < preset.size())
-            result.add(preset.get(posPreset++));
+            result.add(new DEntry(preset.get(posPreset++)));
         entries = result;
         return true;
     }
